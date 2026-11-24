@@ -2,7 +2,13 @@
 
 在配有两台 RoboSense Airy 和一台 Fairy 的 Linux 工控机上配置雷达网络。每辆车使用独立的雷达网段。需要 Python 3.8 或以上、iproute2、NetworkManager 和本机 sudo 权限。
 
-下载本仓库的 `lidar-net.py` 后，在目标车上运行。将 `eth0` 替换为连接雷达交换机的专用网口。
+在目标车终端运行以下命令，匿名下载固定版本并在下载成功后执行。将 `eth0` 替换为连接雷达交换机的专用网口。
+
+```bash
+( f=$(mktemp) && trap 'rm -f "$f"' EXIT && curl -fsSL https://raw.githubusercontent.com/esolk/lidar-net/v1.0.0/lidar-net.py -o "$f" && sudo python3 -I "$f" --iface eth0 )
+```
+
+已有脚本时，可先预览再正式执行。
 
 ```bash
 sudo python3 -I lidar-net.py --iface eth0 --preview
